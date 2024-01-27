@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prescriptions</title>
+</head>
+<body>
+<form method ="get" action="/prescriptions">
+	<h1>Prescriptions</h1>
+	<table id="prescriptionTable">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Time Slot</th>
+				<th>Doctor DOB</th>
+				<th>Doctor Name</th>
+				<th>Medicine</th>
+				<th>Patient Name</th>
+				<th>Instructions</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	</form>
+	<script >const prescriptionTable = document.getElementById('prescriptionTable');
+
+	fetch('/prescriptions')
+	    .then(response => response.json())
+	    .then(prescriptions => {
+	        prescriptions.forEach(prescription => {
+	            const row = prescriptionTable.insertRow();
+	            row.insertCell().textContent = prescription.id;
+	            row.insertCell().textContent = prescription.timeSlot;
+	            row.insertCell().textContent = prescription.doctorDob;
+	            row.insertCell().textContent = prescription.doctorName;
+	            row.insertCell().textContent = prescription.medicine;
+	            row.insertCell().textContent = prescription.patientName;
+	            row.insertCell().textContent = prescription.instructions;
+	        });
+	    });
+</script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Medical Records</title>
+<style>
+/* Navbar styles */
+#navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: cyan;
+	color: #fff;
+	padding: 10px;
+}
+
+#navbar ul {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#navbar li {
+	margin-right: 20px;
+}
+
+#navbar a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Header styles */
+#header {
+	background-color: #eee;
+	padding: 20px;
+	text-align: center;
+}
+
+/* Button styles */
+#button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
+	height: 100px;
+	font-size: 24px;
+	font-family: Arial, sans-serif;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	text-align: center;
+	cursor: pointer;
+}
+
+/* Footer styles */
+#footer {
+	background-color: cyan;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+</style>
+<script src="js/Reload.js"></script>
+</head>
+<body onload="load()">
+	<div id="navbar">
+		
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</div>
+
+	<div id="header">
+		<h2>Welcome to our Medical Records System</h2>
+	</div>
+
+
+	<form action="/patient1">
+		<div id="button"
+			onclick="window.open('http://localhost:8088/servletmedikit/hello', '_blank')">
+			Get Records</div>
+	</form>
+	<title>Sensor's Real Time Reading</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
+      .data-container {
+        width: 80%;
+        margin: 30px auto;
+        background-color: #fff;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+      }
+      table {
+        width: 100%;
+      }
+      th, td {
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background-color: #6eb7ff;
+        color: #fff;
+        font-weight: bold;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #007BFF;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #prescriptionResult {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #diseaseContent {
+            text-align: left;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+   
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  </head>
+  <body>
+    <div class="data-container">
+    <div class="container">
+        <h1>Ayurvedic Prescription</h1>
+        <form id="ayurvedicForm">
+            <label for="disease">Select a Disease:</label>
+            <select id="disease" required>
+                <option value="cough">Cough</option>
+                <option value="headache">Headache</option>
+                <option value="digestive issues">Digestive Issues</option>
+                <!-- Add more diseases here -->
+                <option value="respiratory">Respiratory Diseases</option>
+                <option value="cancer">Cancer</option>
+                <option value="diabetes">Diabetes</option>
+                <option value="neurological">Neurological Disorders</option>
+                <option value="mental_health">Mental Health Conditions</option>
+                <option value="gastrointestinal">Gastrointestinal Disorders</option>
+                <option value="autoimmune">Autoimmune Diseases</option>
+                <option value="skin">Skin Conditions</option>
+                <option value="liver">Liver Diseases</option>
+                <option value="dental_oral">Dental and Oral Health Conditions</option>
+                <option value="allergies">Allergies</option>
+            </select>
+            <button type="submit">Get Prescription</button>
+        </form>
+        <div id="prescriptionResult"></div>
+    </div>
+
+    <div id="diseaseContent" style="display: none;">
+        <!-- Content for diseases will be displayed here -->
+    </div>
+
+    <table>
+        <tr>
+            <th>Pandemic</th>
+            <th>Time Period</th>
+            <th>Estimated Death Toll</th>
+            <th>Estimated Infected Population</th>
+            <th>Current Quarantine Status</th>
+        </tr>
+        <tr>
+            <td>Spanish flu (1918-1920)</td>
+            <td>50-100 million</td>
+            <td>500 million</td>
+            <td>250 million</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>Asian flu (1957-1958)</td>
+            <td>1-4 million</td>
+            <td>110 million</td>
+            <td>55 million</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>Hong Kong flu (1968-1969)</td>
+            <td>1-4 million</td>
+            <td>100 million</td>
+            <td>50 million</td>
+            <td>N/A</td>
+        </tr>
+        <tr>
+            <td>COVID-19 (2019-present)</td>
+            <td>6.5 million (as of Oct 25, 2023)</td>
+            <td>650 million</td>
+            <td>0 (quarantines no longer widely used)</td>
+            <td>No longer widely used</td>
+        </tr>
+    </table>
+     
+</script>
+    <script >
+      
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const ayurvedicForm = document.getElementById('ayurvedicForm');
+            const prescriptionResult = document.getElementById('prescriptionResult');
+            const diseaseContent = document.getElementById('diseaseContent');
+
+            const diseasesAndPrescriptions = {
+                "cough": {
+                    prescription: "Take Ayurvedic Medicine A and practice yoga pose 1.",
+                    yoga: "Yoga Pose 1: Example Pose for Cough",
+                    medicine: "Medicine A: Cough Remedy"
+                },
+                "headache": {
+                    prescription: "Take Ayurvedic Medicine B and practice yoga pose 2.",
+                    yoga: "Yoga Pose 2: Example Pose for Headache",
+                    medicine: "Medicine B: Headache Remedy"
+                },
+                "digestive issues": {
+                    prescription: "Take Ayurvedic Medicine C and practice yoga pose 3.",
+                    yoga: "Yoga Pose 3: Example Pose for Digestive Issues",
+                    medicine: "Medicine C: Digestive Remedy"
+                },
+                "respiratory": {
+                    prescription: "Soups with warming spices like black pepper. Avoid heavy, cold foods.",
+                    yoga: "Yoga for better lung health, like deep breathing exercises and asanas that expand the chest."
+                },
+                "cancer": {
+                    prescription: "Nutrient-dense soups with a variety of colorful vegetables. Focus on an anti-inflammatory diet.",
+                    yoga: "Yoga for cancer patients, including gentle yoga, meditation, and relaxation techniques."
+                },
+                "diabetes": {
+                    prescription: "Soups with bitter gourd (karela) or fenugreek to help manage blood sugar. A balanced diet with whole grains and fiber.",
+                    yoga: "Yoga for diabetes, with a focus on asanas that stimulate the pancreas and improve insulin sensitivity."
+                },
+                "neurological": {
+                    prescription: "Nutrient-rich soups that support brain health. Emphasize a diet with antioxidants and omega-3 fatty acids.",
+                    yoga: "Yoga for neurological disorders, including gentle poses and mindfulness techniques for stress management."
+                },
+                "mental_health": {
+                    prescription: "Soups with mood-enhancing ingredients like saffron. A diet rich in whole foods and Omega-3 fatty acids.",
+                    yoga: "Yoga for mental health, including relaxation, meditation, and grounding asanas."
+                },
+                "gastrointestinal": {
+                    prescription: "Soothing soups with ginger and fennel. A diet focused on easy-to-digest foods and avoiding triggers.",
+                    yoga: "Yoga practices for digestion, like asanas that aid in peristalsis and promote gut health."
+                },
+                "autoimmune": {
+                    prescription: "Soups with anti-inflammatory herbs like turmeric and ashwagandha. A diet that avoids potential triggers and allergens.",
+                    yoga: "Yoga for autoimmune diseases, with gentle, stress-reducing poses and meditation."
+                },
+                "skin": {
+                    prescription: "Soups with detoxifying herbs like neem. A diet focused on skin-friendly foods and hydration.",
+                    yoga: "Yoga practices for skin health, including asanas that promote circulation and relaxation."
+                },
+                "liver": {
+                    prescription: "Liver-cleansing soups with ingredients like dandelion root. A diet that supports liver function and avoids excessive alcohol and fatty foods.",
+                    yoga: "Yoga for liver health, including detoxifying poses and pranayama."
+                },
+                "dental_oral": {
+                    prescription: "Soups with soothing herbs like licorice. A diet that supports oral hygiene.",
+                    yoga: "Yoga practices for jaw relaxation and stress reduction."
+                },
+                "allergies": {
+                    prescription: "Soups with anti-allergic herbs like mint and ginger. A diet with foods that don't trigger allergies.",
+                    yoga: "Yoga for allergies, including asanas and pranayama to improve respiratory health."
+                }
+            };
+
+            ayurvedicForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const disease = document.getElementById('disease').value;
+                const prescription = diseasesAndPrescriptions[disease];
+                if (prescription) {
+                    const prescriptionText = `<strong>Ayurvedic Prescription:</strong> ${prescription.prescription}<br><strong>Yoga:</strong> ${prescription.yoga}`;
+                    prescriptionResult.innerHTML = prescriptionText;
+                    diseaseContent.style.display = 'block';
+                } else {
+                    prescriptionResult.innerText = "Prescription not found for this disease.";
+                    diseaseContent.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <body>
+    <div class="container mt-3">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>AQI Index</th>
+                    <th>Body Shiver</th>
+                    <th>Body Temp</th>
+                    <th>Heart Rate</th>
+                    <th>SPO2</th>
+                    <th>Humidity</th>
+                    <th>Temperature</th>
+                </tr>
+            </thead>
+            
+            <tbody id="tbody1"></tbody>
+        </table>
+    </div>
+</body>
+	<script type="module">
+      // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+
+    const d = new Date();
+    var time = d.getTime();
+    var tbody = document.getElementById('tbody1');
+    function AddItemToTable(bodytemp, aqiIndex, bodyShiver, heartRate, spo2, humidity, temperature){
+
+        let trow = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
+        let td4 = document.createElement("td");
+        let td5 = document.createElement("td");
+        let td6 = document.createElement("td");
+        let td7 = document.createElement("td");
+        bodyShiver = 0;
+        td1.innerHTML = new Date().getTime();
+        td2.innerHTML = bodytemp;
+        td3.innerHTML = aqiIndex;
+        td4.innerHTML = bodyShiver;
+        td5.innerHTML = heartRate;
+        td6.innerHTML = spo2;
+        td7.innerHTML = humidity;
+        td8.innerHTML = temperature;
+
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+        trow.appendChild(td4);
+        trow.appendChild(td5);
+        trow.appendChild(td6);
+        trow.appendChild(td7);
+        trow.appendChild(td8);
+
+
+        tbody.appendChild(trow);
+    }
+    function addAllItems(data) {
+        const newRow = tbody.insertRow();
+        for (let i = 0; i < data.length; i++) {
+            const cell = newRow.insertCell(i);
+            if (i === 0) {
+                cell.innerHTML = formatTime(data[i]);
+            } else {
+                cell.innerHTML = data[i];
+            }
+        }
+    }
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyAgGRwbMMcDLKqDwyHjBcPkqby55xqE7IY",
+        authDomain: "ezeagros.firebaseapp.com",
+        databaseURL: "https://ezeagros-default-rtdb.firebaseio.com",
+        projectId: "ezeagros",
+        storageBucket: "ezeagros.appspot.com",
+        messagingSenderId: "439167074452",
+        appId: "1:439167074452:web:3c7d7e9ceb86451e2f3481",
+        measurementId: "G-BWYQHFVQXD"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const analytics = getAnalytics(app);
+
+    function GetAllDataOnce(){
+        var dataRef3 = ref(db, "/Body Temp");
+        var dataRef2 = ref(db, "/Body Shiver ");
+        var dataRef1 = ref(db, "/AQI Index");
+        var dataRef4 = ref(db, "/Heart Rate");
+        var dataRef5 = ref(db, "/Spo2");
+        var dataRef6 = ref(db, "/humidity");
+        var dataRef7 = ref(db, "/temperature");
+        get(dataRef1).then((snapshot1) => {
+            get(dataRef2).then((snapshot2) => {
+                get(dataRef3).then((snapshot3) => {
+                    get(dataRef4).then((snapshot4) => {
+                        get(dataRef5).then((snapshot5) => {
+                            get(dataRef6).then((snapshot6) => {
+                                get(dataRef7).then((snapshot7) => {
+                                    addAllItems([d.getTime(), snapshot1.val(), snapshot2.val(), snapshot3.val(), snapshot4.val(), snapshot5.val(), snapshot6.val(), snapshot7.val()]);
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+
+    function formatTime(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString(); 
+    }
+
+
+    function createNewTable() {
+        const newTable = document.createElement("table");
+        newTable.className = "table table-dark";
+        const newTableID = Date.now(); 
+        newTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Body Temp</th>
+                    <th>AQI Index</th>
+                    <th>Body Shiver</th>
+                    <th>Heart Rate</th>
+                    <th>SPO2</th>
+                    <th>Humidity</th>
+                </tr>
+            </thead>
+            <tbody id="tbody${newTableID}">
+            </tbody>
+        `;
+        document.querySelector(".container").appendChild(newTable);
+
+        return newTableID;
+    }
+
+    function addAnotherTable() {
+        // const newTableID = createNewTable();
+        // const newTbody = document.getElementById(`tbody${newTableID}`);
+
+        var dataRef1 = ref(db, "/AQI Index");
+        var dataRef2 = ref(db, "/Body Shiver ");
+        var dataRef3 = ref(db, "/Body Temp");
+        var dataRef4 = ref(db, "/Heart Rate");
+        var dataRef5 = ref(db, "/Spo2");
+        var dataRef6 = ref(db, "/humidity");
+        var dataRef7 = ref(db, "/temperature");
+        // });
+        get(dataRef1).then((snapshot1) => {
+            get(dataRef2).then((snapshot2) => {
+                get(dataRef3).then((snapshot3) => {
+                    get(dataRef4).then((snapshot4) => {
+                        get(dataRef5).then((snapshot5) => {
+                            get(dataRef6).then((snapshot6) => {
+                                get(dataRef7).then((snapshot7) => {
+                                    addAllItems([d.getTime(), snapshot1.val(), snapshot2.val(), snapshot3.val(), snapshot4.val(), snapshot5.val(), snapshot6.val(), snapshot7.val()]);
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+    setInterval(addAnotherTable, 6000);
+
+    
+
+    window.onload = GetAllDataOnce;
+
+</script>
+
+</body>
+</html>

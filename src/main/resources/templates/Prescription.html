@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Medical Prescription</title>
+<style>
+#navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: cyan;
+	color: #fff;
+	padding: 10px;
+}
+
+#navbar ul {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#navbar li {
+	margin-right: 20px;
+}
+
+#navbar a {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Header styles */
+#header {
+	background-color: #eee;
+	padding: 20px;
+	text-align: center;
+}
+
+/* Button styles */
+#button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
+	height: 100px;
+	font-size: 24px;
+	font-family: Arial, sans-serif;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	text-align: center;
+	cursor: pointer;
+}
+
+/* Footer styles */
+#footer {
+	background-color: cyan;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+/* Basic styling for the form */
+form {
+	max-width: 800px;
+	margin: 0 auto;
+	font-family: Arial, sans-serif;
+}
+
+label {
+	display: block;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+input[type="text"], input[type="date"], select {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+textarea {
+	width: 100%;
+	height: 150px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+button {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+button:hover {
+	background-color: #0062cc;
+}
+
+.medicine {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.medicine input[type="text"] {
+	flex-grow: 1;
+	margin-right: 5px;
+	border-radius: 3px;
+	padding: 5px;
+	font-size: 16px;
+}
+
+.medicine button {
+	flex-shrink: 0;
+	margin-left: 5px;
+	border-radius: 3px;
+	padding: 5px;
+	font-size: 16px;
+}
+
+.medicine-keywords {
+	margin-top: 20px;
+}
+
+.medicine-keywords ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.medicine-keywords li {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	background-color: #eee;
+	padding: 5px;
+	border-radius: 3px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.medicine-keywords li:hover {
+	background-color: #ddd;
+}
+</style>
+
+<script src="js/Reload.js"></script>
+</head>
+<body onload="load()">
+	<div id="navbar">
+		<h1>Medical Records</h1>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</div>
+
+	<div id="header">
+		<h2>Welcome to our Medical Records System</h2>
+	</div>
+
+	<div class="container mt-3">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>AQI Index</th>
+                    <th>Body Shiver</th>
+                    <th>Body Temp</th>
+                    <th>Heart Rate</th>
+                    <th>SPO2</th>
+                    <th>Humidity</th>
+                </tr>
+            </thead>
+            
+            <tbody id="tbody1"></tbody>
+        </table>
+    </div>
+		<h1>Medical Prescription</h1>
+		<label for="doctor-name">Doctor Name:</label> <input type="text"
+			id="doctor-name" name="doctorName" required /> <label for="dob">Date
+			of Birth:</label> <input type="date" id="doctor-dob" name="doctorDob"
+			required /> <label for="patient-name">Patient Name:</label> <input
+			type="text" id="patient-name" name="patientName" required /> <label
+			for="medicine">Medicine</label>
+		<textarea id="medicine" name="medicine" required></textarea>
+
+		<label for="TimeSlot">TimeSlot</label>
+		<textarea id="TimeSlot" type="text" name="timeSlot" required></textarea>
+		<hr />
+		<div>
+			<div>
+				<label for="instructions">Instructions:</label>
+				<textarea id="instructions" name="instructions" required></textarea>
+
+			</div>
+		</div>
+
+		<hr />
+		 <button type="button" id="emergency-button" onclick="handleEmergency()">Emergency</button>
+		<br>
+		<button type="submit">Submit</button>
+	</form>
+
+	
+
+</body>
+<script>
+    function handleEmergency() {
+        // Add your emergency action here
+        alert("Emergency action triggered!");
+        window.location.href = '/prescription3';
+        
+    }
+</script>
+<script type="module">
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+
+    const d = new Date();
+    var time = d.getTime();
+    var tbody = document.getElementById('tbody1');
+    function AddItemToTable(bodytemp, aqiIndex, bodyShiver, heartRate, spo2, humidity, temperature){
+
+        let trow = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
+        let td4 = document.createElement("td");
+        let td5 = document.createElement("td");
+        let td6 = document.createElement("td");
+        let td7 = document.createElement("td");
+        
+        td1.innerHTML = new Date().getTime();
+        td2.innerHTML = bodytemp;
+        td3.innerHTML = aqiIndex;
+        td4.innerHTML = bodyShiver;
+        td5.innerHTML = heartRate;
+        td6.innerHTML = spo2;
+        td7.innerHTML = humidity;
+        // td8.innerHTML = temperature;
+
+        trow.appendChild(td1);
+        trow.appendChild(td2);
+        trow.appendChild(td3);
+        trow.appendChild(td4);
+        trow.appendChild(td5);
+        trow.appendChild(td6);
+        trow.appendChild(td7);
+        // trow.appendChild(td8);
+
+
+        tbody.appendChild(trow);
+    }
+    function addAllItems(data) {
+        const newRow = tbody.insertRow();
+        for (let i = 0; i < data.length; i++) {
+            const cell = newRow.insertCell(i);
+            if (i === 0) {
+                cell.innerHTML = formatTime(data[i]);
+            } else {
+                cell.innerHTML = data[i];
+            }
+        }
+    }
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-analytics.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyAgGRwbMMcDLKqDwyHjBcPkqby55xqE7IY",
+        authDomain: "ezeagros.firebaseapp.com",
+        databaseURL: "https://ezeagros-default-rtdb.firebaseio.com",
+        projectId: "ezeagros",
+        storageBucket: "ezeagros.appspot.com",
+        messagingSenderId: "439167074452",
+        appId: "1:439167074452:web:3c7d7e9ceb86451e2f3481",
+        measurementId: "G-BWYQHFVQXD"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const analytics = getAnalytics(app);
+
+    function GetAllDataOnce(){
+        var dataRef3 = ref(db, "/Body Temp");
+        var dataRef2 = ref(db, "/Body Shiver");
+        var dataRef1 = ref(db, "/AQI Index");
+        var dataRef4 = ref(db, "/Heart Rate");
+        var dataRef5 = ref(db, "/Spo2");
+        var dataRef6 = ref(db, "/humidity");
+        get(dataRef1).then((snapshot1) => {
+            get(dataRef2).then((snapshot2) => {
+                get(dataRef3).then((snapshot3) => {
+                    get(dataRef4).then((snapshot4) => {
+                        get(dataRef5).then((snapshot5) => {
+                            get(dataRef6).then((snapshot6) => {
+                                addAllItems([d.getTime(), snapshot1.val(), snapshot2.val(), snapshot3.val(), snapshot4.val(), snapshot5.val(), snapshot6.val()]);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+
+    function formatTime(timestamp) {
+        const date = new Date(timestamp);
+        return date.toLocaleString(); 
+    }
+
+
+    function createNewTable() {
+        const newTable = document.createElement("table");
+        newTable.className = "table table-dark";
+        const newTableID = Date.now(); 
+        newTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Body Temp</th>
+                    <th>AQI Index</th>
+                    <th>Body Shiver</th>
+                    <th>Heart Rate</th>
+                    <th>SPO2</th>
+                    <th>Humidity</th>
+                </tr>
+            </thead>
+            <tbody id="tbody${newTableID}">
+            </tbody>
+        `;
+        document.querySelector(".container").appendChild(newTable);
+
+        return newTableID;
+    }
+
+    function addAnotherTable() {
+        // const newTableID = createNewTable();
+        // const newTbody = document.getElementById(`tbody${newTableID}`);
+
+        var dataRef1 = ref(db, "/AQI Index");
+        var dataRef2 = ref(db, "/Body Shiver");
+        var dataRef3 = ref(db, "/Body Temp");
+        var dataRef4 = ref(db, "/Heart Rate");
+        var dataRef5 = ref(db, "/Spo2");
+        var dataRef6 = ref(db, "/humidity");
+        // });
+        get(dataRef1).then((snapshot1) => {
+            get(dataRef2).then((snapshot2) => {
+                get(dataRef3).then((snapshot3) => {
+                    get(dataRef4).then((snapshot4) => {
+                        get(dataRef5).then((snapshot5) => {
+                            get(dataRef6).then((snapshot6) => {
+                                addAllItems([d.getTime(), snapshot1.val(), snapshot2.val(), snapshot3.val(), snapshot4.val(), snapshot5.val(), snapshot6.val()]);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
+    setInterval(addAnotherTable, 6000);
+
+    
+
+    window.onload = GetAllDataOnce;
+</script>
+
+</html>

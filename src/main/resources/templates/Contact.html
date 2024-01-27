@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:fragment="layout(content)">
+
+  <head>
+    <meta charset="utf-8">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>Signodes</title>
+<link rel="stylesheet" href="Style1.css" />
+</head>
+<Style>
+form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  margin-bottom: 0.5rem;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+</Style>
+
+  <body >
+  
+    <form  method="post">
+     <h2>Doctor Appointment Form</h2>
+  <div class="form-group">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required>
+  </div>
+  <div class="form-group">
+    <label for="date">Appointment Date:</label>
+    <input type="date" id="date" name="date" required>
+  </div>
+  <div class="form-group">
+    <label for="time">Appointment Time:</label>
+    <input type="time" id="time" name="time" required>
+  </div>
+  <div class="form-group">
+    <label for="disease">Disease:</label>
+    <select id="disease" name="disease" required>
+      <option value="">Select a disease</option>
+      <option value="Cancer">Cancer</option>
+      <option value="Heart Disease">Heart Disease</option>
+      <option value="Diabetes">Diabetes</option>
+      <option value="Asthma">Asthma</option>
+      <option value="Arthritis">Arthritis</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+<script type="text/javascript">
+const apiKey = 'YOUR_API_KEY'; // Replace with your own API key
+
+const newsContainer = document.querySelector('.news-container');
+const appointmentButton = document.querySelector('.appointment');
+const doctorAdminButton = document.querySelector('.doctor-admin');
+const patientButton = document.querySelector('.patient');
+const form = document.querySelector('form');
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const name = form.name.value;
+  const email = form.email.value;
+  const message = form.message.value;
+  // Code to send form data to server
+  form.reset();
+});
+
+appointmentButton.addEventListener('click', () => {
+  window.location.href = "Contact.html";
+});
+
+
+doctorAdminButton.addEventListener('click', () => {
+  // Code to handle "Doctor Admin" button click
+});
+
+patientButton.addEventListener('click', () => {
+  // Code to handle "Patient Login" button click
+});
+
+// Fetch news articles from the News API
+fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`)
+  .then(response => response.json())
+  .then(data => {
+    // Loop through each article and create an HTML element to display it
+    data.articles.forEach(article => {
+      const articleElement = document.createElement('div');
+      articleElement.classList.add('news-item');
+
+      const titleElement = document.createElement('h3');
+      titleElement.textContent = article.title;
+      articleElement.appendChild(titleElement);
+
+      const descriptionElement = document.createElement('p');
+      descriptionElement.textContent = article.description;
+      articleElement.appendChild(descriptionElement);
+
+      const urlElement = document.createElement('a');
+      urlElement.href = article.url;
+      urlElement.textContent = 'Read more';
+      articleElement.appendChild(urlElement);
+
+      newsContainer.appendChild(articleElement);
+    });
+  })
+  .catch(error => console.log(error));
+
+</script>
+</html>

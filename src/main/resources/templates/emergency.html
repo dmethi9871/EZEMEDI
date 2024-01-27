@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Emergency Prescription</h1>
+        <form action="/prescription3" method="post">
+            <label for="patient-name">Patient Name:</label>
+            <input type="text" id="patient-name" name="patientName" required>
+
+            <label for="medicine">Emergency Medicine:</label>
+            <textarea id="medicine" name="emergencyMedicine" rows="4" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const emergencyPrescriptionForm = document.getElementById("emergency-prescription-form");
+
+            emergencyPrescriptionForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                // Get the form data
+                const formData = new FormData(emergencyPrescriptionForm);
+                const prescriptionData = {};
+                formData.forEach((value, key) => {
+                    prescriptionData[key] = value;
+                });
+
+                // You can now do something with the prescription data
+                console.log("Emergency Prescription Data:", prescriptionData);
+                // For a real application, you would typically send this data to a server for storage or further processing.
+            });
+        });
+    </script>
+</body>
+</html>
